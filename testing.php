@@ -33,4 +33,30 @@ spl_autoload_register(function ($class)
  |      echo 'gagal login';
  |  }
 */
+
+/*test check duplikat
+ |
+ |  $user = new Member($conn);
+ |  if($user->checkMember('baju2') == false){
+ |      echo 'tidak duplikat';
+ |  }
+ |  else{
+ |      echo 'duplikat';
+ |  }
+*/
+
+/*test insert
+ |  $user = new Member($conn);
+ |  $data = [
+ |      'nama'  => 'huawei',
+ |      'harga' => '344444'
+ |  ];
+ |  
+ |  if($user->insertMember($data)){
+ |      echo 'berhasil';
+ |  }
+ |  else{
+ |      echo 'gagal';
+ |  }
+*/
 ?>

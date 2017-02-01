@@ -36,8 +36,12 @@ Class Member
     //insert data member baru
     public function insertMember(Array $data)
     {
-        $query = "";
+        $nama = $data['nama'];
+        $harga = $data['harga'];
+        $query = "INSERT INTO barang VALUES(null, :nama, :harga, null, null)";
         $data = $this->conn->prepare($query);
+        $data->bindParam(':nama', $nama);
+        $data->bindParam(':harga', $harga);
         $data->execute();
         return true;
     }
@@ -58,6 +62,40 @@ Class Member
         $data = $this->conn->prepare($query);
         $data->execute();
         return true;
+    }
+
+    //cek duplikat member berdasarkan id
+    public function checkMember($id)
+    {
+        $query = "";
+        $data = $this->conn->prepare($query);
+        $data->bindParam(':id', $id);
+        $data->execute();
+
+        //jika ada dupikat return true
+        if($data->rowCount() > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    //cek duplikat member berdasarkan username
+    public function checkMember($username)
+    {
+        $query = "SELECT nm_barang FROM barang WHERE nm_barang = :username";
+        $data = $this->conn->prepare($query);
+        $data->bindParam(':username', $username);
+        $data->execute();
+
+        //jika ada dupikat return true
+        if($data->rowCount() > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     //fungsi register jika seluruh validasi berhasil dilewatkan
