@@ -4,46 +4,94 @@ require '../model/Produk.php';
 
 $produk = new Produk($conn);
 
-$action = $_GET['action'] ?: '';
+$action   = isset($_GET['action']) ? $_GET['action'] : 'insert';
 
 if($action == 'insert'){
+    $nama     = isset($_POST['nama']) ? $_POST['nama'] : 'a';
+    $harga    = isset($_POST['harga']) ? $_POST['harga'] : 's';
+    $penjual  = isset($_POST['penjual']) ? $_POST['penjual'] : '';
+    $ukuran   = isset($_POST['ukuran']) ? $_POST['ukuran'] : 'f';
+    //$file     = $_FILE['foto'];
+
     $data = [
-        'nama'      => $_POST['nama'] ?: '',
-        'harga'     => $_POST['harga'] ?: '',
-        'penjual'   => $_POST['penjual'] ?: '',
-        'ukuran'    => $_POST['ukuran'] ?: ''
+        'nama'      => $nama,
+        'harga'     => $harga,
+        'penjual'   => $penjual,
+        'ukuran'    => $ukuran
     ];
 
-    //cek data kosong dlm array
-    if(!in_array('', $data)){
-        //cek duplikat profil
-        if($profil->insertProduk($data)){
-            header('location: ../produk.php');
+    foreach($data as $key => $value){
+        echo $key;
+        echo $value;
+        if(empty($value)){
+            $return['error'][$key] = $key.' field tidak boleh kosong';
         }
-        else{
-            //error upload file
-        }
+    }
+
+    //dipake
+    /*$datafoto = $produk->validateFile($file);
+    if($datafoto == false){
+        $return['error']['file'] = 'file field tidak boleh kosong';
     }
     else{
+        $data['foto'] = $datafoto['filename'];
+    }*/
 
+    if(!empty($return['error'])){
+        $return['hasil'] = 'gagal';
     }
+    else{
+        $return['hasil'] = 'sukses';
+        //$profil->insertProduk($data);
+        //move_uploaded_file($datafoto['filetmp'], '../images/produk/'.$datafoto['filename']);
+    }
+
+    print_r($return);
+    echo json_encode($return);
 }
 elseif($action == 'update'){
-    //soon
-}
-elseif($action == 'delete'){
-    if(isset($_GET['id'])){
-        if($user->checkProduk($_GET['id']) == false){
-            $user->deleteProduk($_GET['id']);
-            header('location: ../Produk.php');
+    $nama     = isset($_POST['nama']) ? $_POST['nama'] : 'a';
+    $harga    = isset($_POST['harga']) ? $_POST['harga'] : 's';
+    $penjual  = isset($_POST['penjual']) ? $_POST['penjual'] : '';
+    $ukuran   = isset($_POST['ukuran']) ? $_POST['ukuran'] : 'f';
+    //$file     = $_FILE['foto'];
+
+    $data = [
+        'nama'      => $nama,
+        'harga'     => $harga,
+        'penjual'   => $penjual,
+        'ukuran'    => $ukuran
+    ];
+
+    foreach($data as $key => $value){
+        if(empty($value)){
+            $return['error'][$key] = $key.' field tidak boleh kosong';
         }
-        else{
-            //error id user yg akan dihapus tidak ditemukan
-        }
+    }
+
+    //dipake
+    /*$datafoto = $produk->validateFile($file);
+    if($datafoto == false){
+        $return['error']['file'] = 'file field tidak boleh kosong';
     }
     else{
-        //error id kosong
+        $data['foto'] = $datafoto['filename'];
+    }*/
+
+    if(!empty($return['error'])){
+        $return['hasil'] = 'gagal';
     }
+    else{
+        $return['hasil'] = 'sukses';
+        //$profil->updateProduk($data);
+        //move_uploaded_file($datafoto['filetmp'], '../images/produk/'.$datafoto['filename']);
+    }
+
+    //print_r($return);
+    echo json_encode($return);
+}
+elseif($action == 'delete'){
+    $user->deleteProduk($_GET['id']);
 }
 else{
     //error action kosong

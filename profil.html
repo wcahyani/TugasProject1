@@ -10,11 +10,11 @@
     <link rel="stylesheet" type="text/css" href="assets/css/main.css">
 
     <!-- Website Font style -->
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     
     <!-- Google Fonts -->
-    <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+    <!--<link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>-->
 
 <div class="container">
 <div class="row">
@@ -36,7 +36,7 @@
             </div>
             <div class="panel-body">
               <div class="row">
-                <div class="col-md-3 col-lg-3 " align="center"> <img alt="orang.jpg" src="orang.jpg" class="img-circle img-responsive"> </div>
+                <div class="col-md-3 col-lg-3 " align="center"> <img alt="orang.jpg" src="images/profil/orang.jpg" class="img-circle img-responsive"> </div>
                 
                 <!--<div class="col-xs-10 col-sm-10 hidden-md hidden-lg"> <br>
                   <dl>
@@ -85,42 +85,49 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title" id="myModalLabel">Profile</h4>
           </div>
-        <form method="POST">
+        <form method="POST" id="formUpdateProfil">
           <div class="modal-body">
                   <div class="form-group">
                     <label>Nama</label>
                   <input type="hidden" name="_token" value="">
-                   <input type="text" class="form-control" name="edit_id_biodata" disabled="">
+                   <input type="text" class="form-control" name="editNama">
+                   <div class="error-box" id="errorNama"></div>
                   </div>
                   <div class="form-group">
                     <label>Alamat</label>
-                    <input type="text" class="form-control" name="edit_alamat" placeholder="Alamat">
+                    <input type="text" class="form-control" name="editAlamat" placeholder="Alamat">
+                    <div class="error-box" id="errorAlamat"></div>
                   </div>
                    <div class="form-group">
                     <label>Tanggal Lahir</label>
-                    <input type="date" class="form-control" name="edit_tanggal_lahir" placeholder="Tanggal Lahir">
+                    <input type="date" class="form-control" name="editTtl" placeholder="Tanggal Lahir">
+                    <div class="error-box" id="errorTtl"></div>
                   </div>
                    <div class="form-group">
                     <label>Jenis Kelamin</label>
-                    <select id="jenis_kelamin" class="form-control">
-                      <option value="laki - laki" selected="laki - laki">Laki - Laki</option>
+                    <select id="jenis_kelamin" class="form-control" name="editJk">
+                      <option value="" selected>Pilih jenis kelamin</option>
+                      <option value="laki-laki">Laki - Laki</option>
                       <option value="perempuan">Perempuan</option>
                     </select>
+                    <div class="error-box" id="errorJk"></div>
                   </div>
                    <div class="form-group">
                     <label>No. Hp</label>
-                    <input type="date" class="form-control" name="edit_no_Hp" placeholder="Nomor Hp">
+                    <input type="date" class="form-control" name="editHp" placeholder="Nomor Hp">
+                    <div class="error-box" id="errorHp"></div>
                   </div>
 
                   <div class="form-group">
                     <label>Email</label>
                     <input type="email" class="form-control" name="editEmail" placeholder="Email">
+                    <div class="error-box" id="errorEmail"></div>
                   </div>
 
-                  <div class="form-group">
+                  <!--<div class="form-group">
                     <label>Password</label>
                     <input type="Password" class="form-control" name="editPassword" placeholder="Password">
-                  </div>
+                  </div>-->
          </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-success" id="edit_action" >Ubah</button>
@@ -138,25 +145,24 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title" id="myModalLabel">Ubah Foto</h4>
           </div>
-        <form method="POST">
+        <form method="POST" id="formgantifoto">
           <div class="modal-body">
-                  <div class="form-group">
-                    <label>Ambil Gambar</label>
+              <div class="form-group">
+                  <label>Ambil Gambar</label>
                   <input type="hidden" name="_token" value="">
-                  
-                   <label for = "inputfile"></label>
-              <input type = "file" id = "inputfile">
-              
-         </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-success" id="edit_action" >Ubah</button>
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-          </div>         
+                  <label for = "inputfile"></label>
+                  <input type="file" id="inputfile" name="foto" class="form-file">
+                  <div id="errorfile" class="error-box"></div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success" id="edit_action" >Ubah</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+              </div>         
           </div>
           </div>
           </div>  
 
-</form>
+        </form>
 </div>
 </div>
 </div>
@@ -166,5 +172,5 @@
 
   <script src="js/jquery-3.1.1.js"></script>
   <script src="js/bootstrap.min.js"></script>
-
+  <script src="assets/js/myjs.js"></script>
 </html>

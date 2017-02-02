@@ -3,6 +3,15 @@ Class Profil
 {
     private $conn;
 
+    /*
+    |-------------------------------------------------
+    | fungsi yg dieksekusi saat objek dibuat
+    |--------------------------------------------------
+    |
+    | Parameter :
+    | $db = Object (objek koneksi new PDO)
+    |
+    */
     public function __construct($db)
     {
         $this->conn = $db;
@@ -26,15 +35,6 @@ Class Profil
         return true;
     }
 
-    //simpan foto profil baru
-    public function updateFoto($id, $file)
-    {
-        $query = "";
-        $data = $this->conn->prepare($query);
-        $data->execute();
-        return true;
-    }
-
     //cek duplikat id profil
     public function checkProfil($id){
         $query = "";
@@ -51,33 +51,48 @@ Class Profil
         }
     }
 
-    //validasi foto
-    //cek empty file, nama file, duplikat file
-    //return array ['filetmp' => 'tmp_name', 'filename' => 'name'];
-    //false jika salah
+    /*
+    |-------------------------------------------------
+    | validasi foto : cek empty file, nama file,
+    | duplikat file.
+    |--------------------------------------------------
+    |
+    | Parameter :
+    | $data = Array ($_FILES['foto'])
+    |
+    | Return :
+    | jika berhasil = Array ['filetmp' => 'tmp_name', 'filename' => 'name'];
+    | jika gagal = FALSE
+    |
+    */
     public function validateFile(Array $data)
     {
-        $filetmp = $file['tmp_name'];
+        if(!empty($data)){
+            $filetmp = $data['tmp_name'];
 
-        if(is_uploaded_file($filetmp)){
-            $filename = $data['name'];
+            if(is_uploaded_file($filetmp)){
+                $filename = $data['name'];
 
-            //menghilangkan karakter yang tidak diinginkan
-            $filename = preg_replace("/[^a-zA-Z0-9.]/", "_", $filename);
+                //menghilangkan karakter yang tidak diinginkan
+                $filename = preg_replace("/[^a-zA-Z0-9.]/", "_", $filename);
 
-            //memisahkan nama dan ekstensi file
-            $filename2 = pathinfo($filename, PATHINFO_FILENAME);
-            $ext =  pathinfo($filename, PATHINFO_EXTENSION);
+                //memisahkan nama dan ekstensi file
+                $filename2 = pathinfo($filename, PATHINFO_FILENAME);
+                $ext =  pathinfo($filename, PATHINFO_EXTENSION);
 
-            //cek duplikat file
-            $FileCounter = 1;
-            while (file_exists('../images/profil/'.$filename ))
-            {
-                $filename = $filename2 .'_'. $FileCounter++ .'.'. $ext;
+                //cek duplikat file
+                $FileCounter = 1;
+                while (file_exists('../images/profil/'.$filename ))
+                {
+                    $filename = $filename2 .'_'. $FileCounter++ .'.'. $ext;
+                }
+
+                $array = ['filetmp' => $filetmp, 'filename' => $filename];
+                return $array;
             }
-
-            $array = ['filetmp' => $filetmp, 'filename' => $filename];
-            return $array;
+            else{
+                return false;
+            }
         }
         else{
             return false;
