@@ -1,97 +1,120 @@
 <?php
-require '../config.php';
+require '../config/config.php';
 require '../model/Produk.php';
 
-$produk = new Produk($conn);
+$produk = new Produk($con);
 
-$action   = isset($_GET['action']) ? $_GET['action'] : 'insert';
+$action   = isset($_GET['action']) ? $_GET['action'] : null;
 
+//insert produk baru
 if($action == 'insert'){
-    $nama     = isset($_POST['nama']) ? $_POST['nama'] : 'a';
-    $harga    = isset($_POST['harga']) ? $_POST['harga'] : 's';
-    $penjual  = isset($_POST['penjual']) ? $_POST['penjual'] : '';
-    $ukuran   = isset($_POST['ukuran']) ? $_POST['ukuran'] : 'f';
-    //$file     = $_FILE['foto'];
-
     $data = [
-        'nama'      => $nama,
-        'harga'     => $harga,
-        'penjual'   => $penjual,
-        'ukuran'    => $ukuran
+        'NamaProduk'    => $_POST['NamaProduk'] ?: null,
+        'Keterangan'    => $_POST['Keterangan'] ?: null,
+        'Harga'         => $_POST['Harga'] ?: null,
+        'Ukuran'        => $_POST['Ukuran'] ?: null,
+        'Foto'          => $_FILES['Foto'] ?: []
     ];
 
     foreach($data as $key => $value){
-        echo $key;
-        echo $value;
         if(empty($value)){
-            $return['error'][$key] = $key.' field tidak boleh kosong';
+            $return['error'][$key] = $key.' tidak boleh kosong';
         }
     }
-
-    //dipake
-    /*$datafoto = $produk->validateFile($file);
-    if($datafoto == false){
-        $return['error']['file'] = 'file field tidak boleh kosong';
+    
+    if( !$datafoto = $produk->validateFile($data['Foto']) ){
+        $return['error']['Foto'] = 'Foto tidak boleh kosong';
     }
-    else{
-        $data['foto'] = $datafoto['filename'];
-    }*/
 
     if(!empty($return['error'])){
         $return['hasil'] = 'gagal';
     }
     else{
+        $insert = [
+            'id_produk'     => null,
+            'nama_produk'   => $data['NamaProduk'],
+            'foto_produk'   => $datafoto['filename'],
+            'ket_produk'    => $data['Keterangan'],
+            'harga_produk'  => $data['Harga'],
+            'id_penjual'    => null,
+            'ukuran'        => $data['Ukuran']
+        ];
+
+        $stmt = $con->insert('tabel_product', $insert);
+        $stmt->execute();
+
         $return['hasil'] = 'sukses';
-        //$profil->insertProduk($data);
-        //move_uploaded_file($datafoto['filetmp'], '../images/produk/'.$datafoto['filename']);
+        move_uploaded_file($datafoto['filetmp'], '../images/produk/'.$datafoto['filename']);
     }
 
-    print_r($return);
     echo json_encode($return);
 }
+//update produk baru
 elseif($action == 'update'){
-    $nama     = isset($_POST['nama']) ? $_POST['nama'] : 'a';
-    $harga    = isset($_POST['harga']) ? $_POST['harga'] : 's';
-    $penjual  = isset($_POST['penjual']) ? $_POST['penjual'] : '';
-    $ukuran   = isset($_POST['ukuran']) ? $_POST['ukuran'] : 'f';
-    //$file     = $_FILE['foto'];
-
     $data = [
-        'nama'      => $nama,
-        'harga'     => $harga,
-        'penjual'   => $penjual,
-        'ukuran'    => $ukuran
+        'token'             => $_POST['_token'] ?: null,
+        'editNamaProduk'    => $_POST['editNamaProduk'] ?: null,
+        'editKeterangan'    => $_POST['editKeterangan'] ?: null,
+        'editHarga'         => $_POST['editHarga'] ?: null,
+        'editUkuran'        => $_POST['editUkuran'] ?: null,
+        'Foto'              => $_FILES['editFoto'] ?: []
     ];
 
     foreach($data as $key => $value){
         if(empty($value)){
-            $return['error'][$key] = $key.' field tidak boleh kosong';
+            $err = substr($key, 4);
+            $return['error'][$key] = $err.' tidak boleh kosong';
         }
     }
 
-    //dipake
-    /*$datafoto = $produk->validateFile($file);
-    if($datafoto == false){
-        $return['error']['file'] = 'file field tidak boleh kosong';
+    //boleh update foto kosong, trigger mysql
+    if( !$datafoto = $produk->validateFile($data['Foto']) ){
+        //$return['error']['editFoto'] = 'Foto tidak boleh kosong';
+        $datafoto['filename'] = null;
     }
-    else{
-        $data['foto'] = $datafoto['filename'];
-    }*/
+
+    if(!empty($data['editNamaProduk'])){
+        $stmt = $con->select('tabel_product', ['nama_produk' => $data['editNamaProduk']]);
+        $stmt->execute();
+
+        if($stmt->rowCount() > 0){
+            $return['error']['editNamaProduk'] = 'Nama Produk sudah terpakai';
+        }
+    }
 
     if(!empty($return['error'])){
         $return['hasil'] = 'gagal';
     }
     else{
+        $update = [
+            'nama_produk'   => $data['editNamaProduk'],
+            'foto_produk'   => $datafoto['filename'],
+            'ket_produk'    => $data['editKeterangan'],
+            'harga_produk'  => $data['editHarga'],
+            'id_penjual'    => null,
+            'ukuran'        => $data['editUkuran']
+        ];
+
+        $where = ['id_produk' => $data['token']];
+
+        $stmt = $con->update('tabel_product', $update, $where);
+        $stmt->execute();
+
+        if($datafoto['filename'] != null){
+            move_uploaded_file($datafoto['filetmp'], '../images/produk/'.$datafoto['filename']);
+        }
+        
         $return['hasil'] = 'sukses';
-        //$profil->updateProduk($data);
-        //move_uploaded_file($datafoto['filetmp'], '../images/produk/'.$datafoto['filename']);
     }
 
-    //print_r($return);
     echo json_encode($return);
 }
+//delete produk
 elseif($action == 'delete'){
-    $user->deleteProduk($_GET['id']);
+    if(isset($_GET['id'])){
+        $stmt = $con->delete('tabel_product', ['id_produk' => $_GET['id']]);
+        $stmt->execute();
+    }
 }
 else{
     //error action kosong

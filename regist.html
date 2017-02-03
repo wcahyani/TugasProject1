@@ -2,7 +2,7 @@
 <html lang="en">
     <head> 
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 
@@ -16,7 +16,6 @@
 		<link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
 		<link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
 
-
 		<title>Admin</title>
 	</head>
 	<body>
@@ -29,26 +28,16 @@
 	               	</div>
 	            </div> 
 				<div class="main-login main-center">
-					<form class="form-horizontal" method="post" action="#">
-						
-						<div class="form-group">
-							<label for="name" class="cols-sm-2 control-label">Nama</label>
-							<div class="cols-sm-10">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="name" id="name"  placeholder="Nama"/>
-								</div>
-							</div>
-						</div>
-
+					<form class="form-horizontal" method="post" action="#" id="formregister">
 						<div class="form-group">
 							<label for="email" class="cols-sm-2 control-label">Email</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-									<input type="email" class="form-control" name="email" id="email"  placeholder="Email"/>
+									<input type="email" class="form-control" name="email" id="Email"  placeholder="Email"/>
 								</div>
 							</div>
+							<div class="error-box" id="EmailError"></div>
 						</div>
 
 						<div class="form-group">
@@ -56,9 +45,10 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="username" id="username"  placeholder="Username"/>
+									<input type="text" class="form-control" name="username" id="Username"  placeholder="Username"/>
 								</div>
 							</div>
+							<div class="error-box" id="UsernameError"></div>
 						</div>
 
 						<div class="form-group">
@@ -66,9 +56,10 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="password" id="password"  placeholder="Password"/>
+									<input type="password" class="form-control" name="password" id="Password"  placeholder="Password"/>
 								</div>
 							</div>
+							<div class="error-box" id="PasswordError"></div>
 						</div>
 
 						<div class="form-group">
@@ -76,22 +67,22 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="confirm" id="confirm"  placeholder="Konfirmasi Password"/>
+									<input type="password" class="form-control" name="konfirmasi" id="Konfirmasi"  placeholder="Konfirmasi Password"/>
 								</div>
 							</div>
+							<div class="error-box" id="KonfirmasiError"></div>
 						</div>
 
 						<div class="form-group ">
-							<button type="button" class="btn btn-primary btn-lg btn-block login-button">Register</button>
+							<button class="btn btn-primary btn-lg btn-block login-button">Register</button>
 						</div>
-						<div class="login-register">
-				            <a href="index.php">Login</a>
-				         </div>
 					</form>
 				</div>
 			</div>
 		</div>
 
-		<script type="text/javascript" src="assets/js/bootstrap.js"></script>
+		<script src="js/jquery-3.1.1.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="assets/js/myjs.js"></script>
 	</body>
 </html>

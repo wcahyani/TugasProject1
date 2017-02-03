@@ -25,6 +25,11 @@ if(!empty($return['error'])){
     $return['hasil'] = 'gagal';
 }
 else{
+    $update = ['session_start' => date('Y-m-d h:i:s')];
+    $where = ['username' => $username];
+    $stmt = $con->update('member', $update, $where);
+    $stmt->execute();
+    
     //$_SESSION['id'] = $data['id'];
     //$_SESSION['username'] = $data['username'];
     //$_SESSION['level'] = $data['level'];
@@ -33,15 +38,4 @@ else{
 }
 
 echo json_encode($return);
-/*if($username != '' && $password != ''){
-    $user = new Member($conn);
-    if($user->authLogin($username, $password)){
-        //$_SESSION['id'] = '';
-        //$_SESSION['username'] = '';
-        header('location: profil.php');
-    }
-}
-else{
-    header('location: login.html');
-}*/
 ?>

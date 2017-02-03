@@ -75,7 +75,7 @@ Class Produk
     //false jika salah
     public function validateFile(Array $data)
     {
-        $filetmp = $file['tmp_name'];
+        $filetmp = $data['tmp_name'];
 
         if(is_uploaded_file($filetmp)){
             $filename = $data['name'];

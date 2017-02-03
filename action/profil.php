@@ -18,7 +18,7 @@ if($action == 'editprofil'){
     foreach($data as $key => $value){
         if(empty($value)){
             $err = substr($key, 4);
-            $return['error'][$key] = $err.' field tidak boleh kosong';
+            $return['error'][$key] = $err.' tidak boleh kosong';
         }
     }
 

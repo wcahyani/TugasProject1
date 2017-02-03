@@ -1,4 +1,6 @@
 <?php
+date_default_timezone_set('Asia/Jakarta');
+
 spl_autoload_register(function ($class)
 {
     if (file_exists('../model/'. $class .'.php'))
