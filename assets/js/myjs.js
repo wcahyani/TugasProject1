@@ -32,7 +32,8 @@ $('document').ready(function()
                 });
             }
             else{
-                //redirect ke halaman utama
+                //alert('lol');
+                window.location.href = 'profil.html';
             }
         });
     })

@@ -1,5 +1,5 @@
 <?php
-require '../config.php';
+require '../config/config.php';
 require '../model/Member.php';
 
 $username = $_POST['Username'] ?: null;
@@ -13,10 +13,22 @@ if(empty($password)){
     $return['error']['Password'] = 'Password tidak boleh kosong';
 }
 
+if(!empty($username) && !empty($password)){
+    $user = new Member($con);
+    if(!$data = $user->authLogin($username, $password)){
+        $return['error']['Username'] = 'Username atau Password salah';
+        $return['error']['Password'] = 'Username atau Password salah';
+    }
+}
+
 if(!empty($return['error'])){
     $return['hasil'] = 'gagal';
 }
 else{
+    //$_SESSION['id'] = $data['id'];
+    //$_SESSION['username'] = $data['username'];
+    //$_SESSION['level'] = $data['level'];
+
     $return['hasil'] = 'sukses';
 }
 

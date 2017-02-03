@@ -113,7 +113,7 @@ Class Member
     //fungsi login jika seluruh validasi berhasil dilewati
     public function authLogin($username, $password)
     {
-        $query = "SELECT id, name, password FROM users WHERE name = :username";
+        $query = "SELECT id_profil, username, password FROM member WHERE username = :username";
         $data = $this->conn->prepare($query);
         $data->bindParam(':username', $username);
         $data->execute();
@@ -123,13 +123,19 @@ Class Member
 
             if(password_verify($password, $row->password)){
                 $this->username = $username;
+                $array = [
+                    'id'        => $row->id_profil,
+                    'username'  => $row->username,
+                    'level'     => 'moderator'
+                ];
                 //$_SESSION['id'] = $row->id;
                 //$_SESSION['username'] = $row->username;
 
-                $date = date('d-m-Y');
-                $this->conn->query("UPDATE users SET remember_token = '$date'");
+                //$date = date('d-m-Y');
+                //$this->conn->query("UPDATE member SET session_start = '$date'");
                 //$new->execute();
-                return true;
+                //return true;
+                return $array;
             }
             else{
                 return false;

@@ -21,7 +21,7 @@ $settings = Array(
    'driver'    => 'mysql',
    'host'      => 'localhost',
    'port'      => '3306',
-   'schema'    => 'test',
+   'schema'    => 'db_penjualan',
    'username'  => 'root',
    'password'  => ''
 );
@@ -51,13 +51,13 @@ $con = new ConnectionPDO($dns, $settings['username'], $settings['password']);
 
 /*test login
  |
- |  $user = new Member($conn);
- |  if($user->authLogin('admin', 'admin')){
- |      echo 'berhasil login';
- |  }
- |  else{
- |      echo 'gagal login';
- |  }
+ | $user = new Member($con);
+ | if($data = $user->authLogin('emon', 'admin')){
+ |     print_r($data);
+ | }
+ | else{
+ |     echo 'gagal login';
+ | }
 */
 
 /*test check duplikat

@@ -15,7 +15,7 @@ $settings = Array(
    'driver'    => 'mysql',
    'host'      => 'localhost',
    'port'      => '3306',
-   'schema'    => 'test',
+   'schema'    => 'db_penjualan',
    'username'  => 'root',
    'password'  => ''
 );
