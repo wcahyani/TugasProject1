@@ -6,23 +6,24 @@ $action = $_GET['action'] ?: '';
 
 if($action == 'editprofil'){
     $data = [
-        //'id'               => isset($_POST['_token']) ? $_POST['_token'] : null,
-        'nama_member'      => isset($_POST['editNama']) ? $_POST['editNama'] : null,
-        'alamat_member'    => isset($_POST['editAlamat']) ? $_POST['editAlamat'] : null,
-        'email'            => isset($_POST['editEmail']) ? $_POST['editEmail'] : null,
-        'ttl_member'       => isset($_POST['editTtl']) ? $_POST['editTtl'] : null,
-        'jk_member'        => isset($_POST['editJk']) ? $_POST['editJk'] : null,
-        'hp_member'        => isset($_POST['editHp']) ? $_POST['editHp'] : null
+        //'id'          => isset($_POST['_token']) ? $_POST['_token'] : null,
+        'editNama'      => isset($_POST['editNama']) ? $_POST['editNama'] : null,
+        'editAlamat'    => isset($_POST['editAlamat']) ? $_POST['editAlamat'] : null,
+        'editEmail'     => isset($_POST['editEmail']) ? $_POST['editEmail'] : null,
+        'editTtl'       => isset($_POST['editTtl']) ? $_POST['editTtl'] : null,
+        'editJk'        => isset($_POST['editJk']) ? $_POST['editJk'] : null,
+        'editHp'        => isset($_POST['editHp']) ? $_POST['editHp'] : null
     ];
 
     foreach($data as $key => $value){
         if(empty($value)){
-            $return['error'][$key] = $key.' field tidak boleh kosong';
+            $err = substr($key, 4);
+            $return['error'][$key] = $err.' field tidak boleh kosong';
         }
     }
 
     if(!empty($return['error'])){
-        $return['hasil'] = 'error';
+        $return['hasil'] = 'gagal';
     }
     else{
         $return['hasil'] = 'sukses';
@@ -42,7 +43,7 @@ elseif($action == 'editfoto'){
     //$id = isset($_SESSION['username']) ? $_SESSION['username'] : '';
     //post token itu apa ya?
     $id = isset($_POST['token']) ? $_POST['token'] : null;
-    $foto = isset($_FILES['foto']) ? $_FILES['foto'] : [];
+    $foto = isset($_FILES['editFoto']) ? $_FILES['editFoto'] : [];
 
     //ambil data dari validate file, return array jika benar, selain itu false
     $datafoto = $profil->validateFile($foto);
@@ -59,7 +60,7 @@ elseif($action == 'editfoto'){
 
         //update foto
         //blm diganti
-        $input = ['nm_barang' => 'costas'];
+        $input = ['nm_barang' => 'costasia'];
         $where = ['id' => 34];
         $stmt = $con->update('barang', $input, $where);
         $stmt->execute();

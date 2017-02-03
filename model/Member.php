@@ -82,7 +82,7 @@ Class Member
     }
 
     //cek duplikat member berdasarkan username
-    public function checkMember($username)
+    public function checkMemberUsername($username)
     {
         $query = "SELECT nm_barang FROM barang WHERE nm_barang = :username";
         $data = $this->conn->prepare($query);

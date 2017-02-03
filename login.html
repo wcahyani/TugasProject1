@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title></title>
-	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
 
 </head>
@@ -14,24 +14,24 @@
 			    <h3 class="panel-title" >Form Login</h3>
 			  </div>
 			  <div class="panel-body">
-			   <form class="form-horizontal" action="">
+			   <form class="form-horizontal" id="formlogin" action="#" method="POST">
 				  <div class="form-group">
 				    <label for="inputUsername" class="col-md-2 control-label">Username</label>
 				    <div class="col-md-10">
-				      <input type="email" class="form-control" id="Username" placeholder="Username" minlength="2" required="">
+				      <input type="text" class="form-control" id="Username" name="Username" placeholder="Username" minlength="2">
+							<div class="error-box" id="UsernameError"></div>
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <label for="inputPassword" class="col-md-2 control-label">Password</label>
 				    <div class="col-md-10">
-				      <input type="password" class="form-control" id="a2" placeholder="Password" maxlength="6" required="">
+				      <input type="password" class="form-control" id="Password" name="Password" placeholder="Password" maxlength="6">
+							<div class="error-box" id="PasswordError"></div>
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <div class="col-sm-offset-2 col-md-10">
 				      <button type="submit" class="btn btn-success" id="Login"><i class="fa fa-user-o"></i>Login</button>
-
-				      <button type="submit" class="btn btn-danger" id="Cancel"><i class="fa fa-user-o"></i>Cancel</button>
 
 				      
 		             <div class = "checkbox">
@@ -57,6 +57,7 @@
 	
 </body>
 <script src="js/jquery-3.1.1.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="assets/js/myjs.js"></script>
 	
 </html>
