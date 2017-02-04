@@ -30,7 +30,7 @@ $('document').ready(function()
         e.preventDefault();
         refreshError($(this));
 
-        var url = 'action/login.php';
+        var url = '../action/login.php';
         var data = $(this).serialize();
 
         $.post(url, data, function(result){
