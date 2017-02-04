@@ -1,18 +1,37 @@
 <?php
+session_start();
+
+spl_autoload_register(function ($class)
+{
+    if (file_exists('../model/'. $class .'.php'))
+        require '../model/'. $class . '.php';
+    else
+        exit('Tidak dapat membuka class '.$class.'!');
+});
+
 require '../config/config.php';
 //require '../model/Profil.php';
 
 $action = $_GET['action'] ?: '';
 
-if($action == 'editprofil'){
+//ambil data satu foto
+if($action == 'datafoto'){
+    //$id = $_GET['id'] ?: null;
+
+    $stmt = $con->select('tabel_profile', ['id_profile' => $_SESSION['id']]);
+    $stmt->execute();
+
+    $return = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    echo json_encode($return);
+}
+//update profil
+elseif($action == 'editprofil'){
     $data = [
-        //'id'          => isset($_POST['_token']) ? $_POST['_token'] : null,
-        'editNama'      => isset($_POST['editNama']) ? $_POST['editNama'] : null,
-        'editAlamat'    => isset($_POST['editAlamat']) ? $_POST['editAlamat'] : null,
-        'editEmail'     => isset($_POST['editEmail']) ? $_POST['editEmail'] : null,
-        'editTtl'       => isset($_POST['editTtl']) ? $_POST['editTtl'] : null,
-        'editJk'        => isset($_POST['editJk']) ? $_POST['editJk'] : null,
-        'editHp'        => isset($_POST['editHp']) ? $_POST['editHp'] : null
+        'editNama'   => isset($_POST['editNama']) ? $_POST['editNama'] : null,
+        'editAlamat' => isset($_POST['editAlamat']) ? $_POST['editAlamat'] : null,
+        'editEmail'  => isset($_POST['editEmail']) ? $_POST['editEmail'] : null,
+        'editTlp'    => isset($_POST['editTlp']) ? $_POST['editTlp'] : null
     ];
 
     foreach($data as $key => $value){
@@ -26,23 +45,30 @@ if($action == 'editprofil'){
         $return['hasil'] = 'gagal';
     }
     else{
-        $return['hasil'] = 'sukses';
-        //belum diganti
+        $update = [
+            'nama_member'   => $data['editNama'],
+            'alamat_member' => $data['editAlamat'],
+            'email'         => $data['editEmail'],
+            'tlp_member'    => $data['editTlp']
+        ];
 
-        //$input bs diganti pake array $data
-        $input = ['nm_barang' => 'costas'];
-        $where = ['id' => 34];
-        //$stmt = $con->update('barang', $input, $where);
-        //$stmt->execute();
+        $where = ['id_profile' => $_SESSION['id']];
+        $stmt = $con->update('tabel_profile', $update, $where);
+        $stmt->execute();
+
+        $return['hasil'] = 'sukses';
+        $return['update']['Nama']   = $update['nama_member'];
+        $return['update']['Alamat'] = $update['alamat_member'];
+        $return['update']['Email']  = $update['email'];
+        $return['update']['Tlp']    = $update['tlp_member'];
     }
 
     echo json_encode($return);
 }
+//update foto profil
 elseif($action == 'editfoto'){
     $profil = new Profil($con);
     //$id = isset($_SESSION['username']) ? $_SESSION['username'] : '';
-    //post token itu apa ya?
-    $id = isset($_POST['token']) ? $_POST['token'] : null;
     $foto = isset($_FILES['editFoto']) ? $_FILES['editFoto'] : [];
 
     //ambil data dari validate file, return array jika benar, selain itu false
@@ -56,17 +82,15 @@ elseif($action == 'editfoto'){
         $return['hasil'] = 'error';
     }
     else{
-        $return['hasil'] = 'sukses';
-
-        //update foto
-        //blm diganti
-        $input = ['nm_barang' => 'costasia'];
-        $where = ['id' => 34];
-        $stmt = $con->update('barang', $input, $where);
+        $update = ['foto' => $datafoto['filename']];
+        $where = ['id_profile' => $_SESSION['id']];
+        $stmt = $con->update('tabel_profile', $update, $where);
         $stmt->execute();
 
         //pindahkan image
-        //move_uploaded_file($datafoto['filetmp'], '../images/profil/'.$datafoto['filename']);
+        move_uploaded_file($datafoto['filetmp'], '../images/profil/'.$datafoto['filename']);
+        $return['hasil'] = 'sukses';
+        $return['foto'] = $datafoto['filename'];
     }
 
     //ganti array ke json, dan echo sbg text html untuk dikembalikan ke ajax

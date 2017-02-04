@@ -1,34 +1,5 @@
         <!-- Ini halaman pertamanya -->
         
-        <!--Navigation Bar-->
-        <nav class="navbar navbar-default navbar-fixed-top" style="background-color:#ecf0f1" >
-        <div class="container">
-             <div class="navbar-header page-scroll">
-                <a class="navbar-brand" href="#top" style="color:black">BadjoeKoe</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="hidden">
-                        <a href="#top"></a>
-                    </li>
-                    <li>
-                        <a href="#cari" id="cari">Cari</a>
-                    </li>
-                    <li>
-                        <a href="#produk">Produk</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#kategori">Kategori</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#registrasi">Registrasi</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        </nav>
-        <!--End of Navigation-->
         <!--Header-->
         <header class="header bg-primary">
            <div class="carousel-caption">

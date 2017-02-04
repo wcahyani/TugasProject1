@@ -1,14 +1,6 @@
 <?php
 date_default_timezone_set('Asia/Jakarta');
 
-spl_autoload_register(function ($class)
-{
-    if (file_exists('../model/'. $class .'.php'))
-        require '../model/'. $class . '.php';
-    else
-        exit('Couldn\'t open class '.$class.'!');
-});
-
 error_reporting(E_ALL);
 ini_set('display_errors', TRUE);
 ini_set('display_startup_errors', TRUE);

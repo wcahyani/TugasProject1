@@ -1,4 +1,14 @@
 <?php
+session_start();
+
+spl_autoload_register(function ($class)
+{
+    if (file_exists('../model/'. $class .'.php'))
+        require '../model/'. $class . '.php';
+    else
+        exit('Tidak dapat membuka class '.$class.'!');
+});
+
 require '../config/config.php';
 require '../model/Member.php';
 
@@ -30,9 +40,9 @@ else{
     $stmt = $con->update('member', $update, $where);
     $stmt->execute();
     
-    //$_SESSION['id'] = $data['id'];
-    //$_SESSION['username'] = $data['username'];
-    //$_SESSION['level'] = $data['level'];
+    $_SESSION['id'] = $data['id'];
+    $_SESSION['username'] = $data['username'];
+    $_SESSION['level'] = $data['level'];
 
     $return['hasil'] = 'sukses';
 }

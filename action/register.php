@@ -1,26 +1,42 @@
 <?php
+session_start();
+
+spl_autoload_register(function ($class)
+{
+    if (file_exists('../model/'. $class .'.php'))
+        require '../model/'. $class . '.php';
+    else
+        exit('Tidak dapat membuka class '.$class.'!');
+});
+
 require '../config/config.php';
 require '../model/Member.php';
 
 $data = [
-    'Username'   => $_POST['username'] ?: null,
-    'Password'   => $_POST['password'] ?: null,
-    'Konfirmasi' => $_POST['konfirmasi'] ?: null,
-    'Email'      => $_POST['email'] ?: null
+    'UsernameRegist' => $_POST['username'] ?: null,
+    'PasswordRegist' => $_POST['password'] ?: null,
+    'Konfirmasi'     => $_POST['konfirmasi'] ?: null,
+    'Email'          => $_POST['email'] ?: null
 ];
 
 foreach($data as $key => $value){
     if(empty($value)){
-        $return['error'][$key] = $key.' tidak boleh kosong';
+        if($key == 'UsernameRegist' || $key == 'PasswordRegist'){
+            $err = substr($key, 0, 8);
+            $return['error'][$key] = $err.' tidak boleh kosong';
+        }
+        else{
+            $return['error'][$key] = $key.' tidak boleh kosong';
+        }
     }
 }
 
-if(!empty($data['Username'])){
-    $stmt = $con->select('member', ['username' => $data['Username']]);
+if(!empty($data['UsernameRegist'])){
+    $stmt = $con->select('member', ['username' => $data['UsernameRegist']]);
     $stmt->execute();
 
     if($stmt->rowCount() > 0){
-        $return['error']['Username'] = 'Username sudah terpakai';
+        $return['error']['UsernameRegist'] = 'Username sudah terpakai';
     }
 }
 
@@ -33,9 +49,9 @@ if(!empty($data['Email'])){
     }
 }
 
-if(!empty($data['Password']) && !empty($data['Konfirmasi'])){
-    if($data['Password'] != $data['Konfirmasi']){
-        $return['error']['Password'] = 'Password dan konfirmasi password tidak sama';
+if(!empty($data['PasswordRegist']) && !empty($data['Konfirmasi'])){
+    if($data['PasswordRegist'] != $data['Konfirmasi']){
+        $return['error']['PasswordRegist'] = 'Password dan konfirmasi password tidak sama';
         $return['error']['Konfirmasi'] = 'Password dan konfirmasi password tidak sama';
     }
 }
@@ -46,17 +62,18 @@ if(!empty($return['error'])){
 else{
     $insert = [
         'id_profil'     => null,
-        'username'      => $data['Username'],
-        'password'      => password_hash($data['Password'], PASSWORD_BCRYPT),
+        'username'      => $data['UsernameRegist'],
+        'password'      => password_hash($data['PasswordRegist'], PASSWORD_BCRYPT),
         'email'         => $data['Email'],
+        'level'         => '2',
         'session_start' => date('Y-m-d h:i:s'),
         'session_end'   => null
-        //'level'         => 'user'
     ];
 
     if($con->insert('member', $insert)->execute()){
-        //$_SESSION['id'] = '';
-        //$_SESSION['username'] = '';
+        $_SESSION['id'] = $con->lastInsertId();
+        $_SESSION['username'] = $insert['username'];
+        $_SESSION['level'] = $insert['level'];
 
         $return['hasil'] = 'sukses';
         //$return['notif'] = 'Gagal menginput data, periksa koneksi database';

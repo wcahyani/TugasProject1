@@ -30,7 +30,7 @@ $('document').ready(function()
         e.preventDefault();
         refreshError($(this));
 
-        var url = '../action/login.php';
+        var url = 'action/login.php';
         var data = $(this).serialize();
 
         $.post(url, data, function(result){
@@ -45,7 +45,7 @@ $('document').ready(function()
             }
             else{
                 //redirect setelah login sukses
-                window.location.href = 'index.html';
+                window.location.href = 'index.php';
             }
         });
     })
@@ -68,9 +68,19 @@ $('document').ready(function()
                 });
             }
             else{
-                alert('hi');
-                //redirect ke index
+                window.location.href = 'index.php?profil';
             }
+        });
+    });
+
+    //ambil data untuk edit profil
+    $('#editProfilButton').click(function(){
+        var url = 'action/profil.php?action=datafoto';
+        $.getJSON(url, function(result){
+            $('#editNama').val(result.nama_member);
+            $('#editAlamat').val(result.alamat_member);
+            $('#editEmail').val(result.email);
+            $('#editTlp').val(result.tlp_member);
         });
     });
 
@@ -93,8 +103,11 @@ $('document').ready(function()
                 });
             }
             else{
+                $.each(data.update, function(key, value){
+                    $('#data'+ key).text(value);
+                });
+
                 $('#mymodaledit').modal('hide');
-                //load ulang profil page
             }
         });
     });
@@ -120,7 +133,7 @@ $('document').ready(function()
                 }
                 else{
                     $('#mymodaleditgambar').modal('hide');
-                    //load ulang profil page
+                    $('#imageProfil').attr('src', 'images/profil/' + data.foto);
                 }
             }
         });

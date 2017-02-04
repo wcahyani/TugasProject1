@@ -1,0 +1,15 @@
+#imageProfil{
+    position: relative;
+    max-height: 400px;
+}
+
+#editFotoButton{
+    position: absolute;
+    top: 10px;
+    left: 25px;
+    opacity: .3;
+    transition: all .3s linear;
+}
+#editFotoButton:hover{
+    opacity: 1;
+}

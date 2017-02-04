@@ -1,5 +1,5 @@
 <?php
-    //require 'config/config.php';
+    session_start();
 
     include 'view/layout/header.php';
 
