@@ -1,21 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
---
--- Host: 127.0.0.1
--- Generation Time: Feb 02, 2017 at 01:07 PM
--- Server version: 10.1.19-MariaDB
--- PHP Version: 7.0.13
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
 -- Database: `db_penjualan`
 --
@@ -41,8 +23,9 @@ CREATE TABLE `kategori` (
 CREATE TABLE `member` (
   `id_profil` int(5) NOT NULL,
   `username` varchar(12) DEFAULT NULL,
-  `password` varchar(18) DEFAULT NULL,
+  `password` varchar(60) DEFAULT NULL,
   `email` varchar(35) DEFAULT NULL,
+  `level` varchar(1) DEFAULT NULL,
   `session_start` datetime DEFAULT NULL,
   `session_end` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -51,8 +34,9 @@ CREATE TABLE `member` (
 -- Dumping data for table `member`
 --
 
-INSERT INTO `member` (`id_profil`, `username`, `password`, `email`, `session_start`, `session_end`) VALUES
-(1, 'emon', 'xxx', 'cahjbsng@gmail.com', NULL, NULL);
+INSERT INTO `member` (`id_profil`, `username`, `password`, `email`, `level`, `session_start`, `session_end`) VALUES
+(1, 'emon', 'xxx', 'cahjbsng@gmail.com', NULL, NULL, NULL),
+(2, 'ayu', 'xxxxxx', 'ayu@gmail.com', NULL, NULL, NULL);
 
 --
 -- Triggers `member`
@@ -83,7 +67,8 @@ CREATE TABLE `tabel_product` (
   `ket_produk` text,
   `harga_produk` int(10) DEFAULT NULL,
   `id_penjual` int(5) DEFAULT NULL,
-  `ukuran` varchar(10) DEFAULT NULL
+  `ukuran` varchar(10) DEFAULT NULL,
+  `id_kategori` varchar(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -106,7 +91,8 @@ CREATE TABLE `tabel_profile` (
 --
 
 INSERT INTO `tabel_profile` (`id_profile`, `nama_member`, `alamat_member`, `foto`, `email`, `tlp_member`) VALUES
-(1, NULL, NULL, NULL, 'cahjbsng@gmail.com', NULL);
+(1, NULL, NULL, NULL, 'cahjbsng@gmail.com', NULL),
+(2, NULL, NULL, NULL, 'ayu@gmail.com', NULL);
 
 --
 -- Triggers `tabel_profile`
@@ -153,7 +139,7 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT for table `member`
 --
 ALTER TABLE `member`
-  MODIFY `id_profil` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_profil` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tabel_product`
 --
