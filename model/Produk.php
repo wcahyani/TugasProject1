@@ -3,12 +3,29 @@ Class Produk
 {
     private $conn;
 
+    /*
+    |-------------------------------------------------
+    | fungsi yg dieksekusi saat objek dibuat
+    |--------------------------------------------------
+    |
+    | Parameter :
+    | $db = Object (objek koneksi new PDO)
+    |
+    */
     public function __construct($db)
     {
         $this->conn = $db;
     }
 
-    //tampilkan semua produk
+    /*
+    |-------------------------------------------------
+    | ambil data produk dan kategori
+    |--------------------------------------------------
+    |
+    | Return :
+    | jika berhasil = Array data produk;
+    |
+    */
     public function getAllProduk()
     {
         $query = "SELECT id_produk, nama_produk, foto_produk, ukuran, harga_produk, nama_kategori FROM tabel_product
@@ -18,35 +35,20 @@ Class Produk
         return $data;
     }
 
-    //ambil data produk berdasarkan id produk
-    public function getProduk($id)
-    {
-        $query = "";
-        $data = $this->conn->prepare($query);
-        $data->execute();
-        return $data;
-    }
-
-    //cek duplikat id produk
-    public function checkProduk($id){
-        $query = "";
-        $data = $this->conn->prepare($query);
-        $data->bindParam(':id', $id);
-        $data->execute();
-
-        //jika ada dupikat return true
-        if($data->rowCount() > 0){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-    //validasi foto
-    //cek empty file, nama file, duplikat file
-    //return array ['filetmp' => 'tmp_name', 'filename' => 'name'];
-    //false jika salah
+    /*
+    |-------------------------------------------------
+    | validasi foto : cek empty file, nama file,
+    | duplikat file.
+    |--------------------------------------------------
+    |
+    | Parameter :
+    | $data = Array ($_FILES['foto'])
+    |
+    | Return :
+    | jika berhasil = Array ['filetmp' => 'tmp_name', 'filename' => 'name'];
+    | jika gagal = FALSE
+    |
+    */
     public function validateFile(Array $data)
     {
         $filetmp = $data['tmp_name'];

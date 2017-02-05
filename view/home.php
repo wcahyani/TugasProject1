@@ -1,4 +1,16 @@
         <!-- Ini halaman pertamanya -->
+
+        <?php
+            spl_autoload_register(function ($class)
+            {
+                if (file_exists('model/'. $class .'.php'))
+                    require 'model/'. $class . '.php';
+                else
+                    exit('Tidak dapat membuka class '.$class.'!');
+            });
+
+            require 'config/config.php';
+        ?>
         
         <!--Header-->
         <header class="header bg-primary">
@@ -46,7 +58,7 @@
         <!--Section Produk-->
          <section id="produk" style="padding-top:50px">
     <div class="container">
-        <div class="row" style="width:20%">
+        <div class="row">
               <div class="container">
 
         <div class="row">
@@ -55,86 +67,23 @@
                 <h1 class="page-header">Produk Kita</h1>
             </div>
 
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#">
-                    <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                </a>
-                <div class="caption">
-                  <h5>Header Name</h5>
-                  <p>Description</p>
-                  <p align="center"><a href="http://bootsnipp.com/" class="btn btn-primary btn-block">Open</a></p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#">
-                    <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                </a>
-                <div class="caption">
-                  <h5>Header Name</h5>
-                  <p>Description</p>
-                  <p align="center"><a href="http://bootsnipp.com/" class="btn btn-primary btn-block">Open</a></p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#">
-                    <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                </a>
-                <div class="caption">
-                  <h5>Header Name</h5>
-                  <p>Description</p>
-                  <p align="center"><a href="http://bootsnipp.com/" class="btn btn-primary btn-block">Open</a></p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#">
-                    <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                </a>
-                <div class="caption">
-                  <h5>Header Name</h5>
-                  <p>Description</p>
-                  <p align="center"><a href="http://bootsnipp.com/" class="btn btn-primary btn-block">Open</a></p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#">
-                    <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                </a>
-                <div class="caption">
-                  <h5>Header Name</h5>
-                  <p>Description</p>
-                  <p align="center"><a href="http://bootsnipp.com/" class="btn btn-primary btn-block">Open</a></p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#">
-                    <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                </a>
-                <div class="caption">
-                  <h5>Header Name</h5>
-                  <p>Description</p>
-                  <p align="center"><a href="http://bootsnipp.com/" class="btn btn-primary btn-block">Open</a></p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#">
-                    <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                </a>
-                <div class="caption">
-                  <h5>Header Name</h5>
-                  <p>Description</p>
-                  <p align="center"><a href="http://bootsnipp.com/" class="btn btn-primary btn-block">Open</a></p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#">
-                    <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                </a>
-                <div class="caption">
-                  <h5>Header Name</h5>
-                  <p>Description</p>
-                  <p align="center"><a href="http://bootsnipp.com/" class="btn btn-primary btn-block">Open</a></p>
-                </div>
-            </div>
+            <?php
+                $stmt = $con->select('tabel_product');
+                $stmt->execute();
+
+                while($row = $stmt->fetch(PDO::FETCH_OBJ)) : ?>
+                    <div class="col-lg-3 col-md-4 col-sm-6 thumb">
+                        <a class="thumbnail" href="#">
+                            <img class="img-responsive foto-produk" src="images/produk/<?= $row->foto_produk ?>" alt="">
+                        </a>
+                        <div class="caption">
+                        <h5><?= $row->nama_produk ?></h5>
+                        <p><?= $row->ket_produk ?></p>
+                        <p align="center"><a href="#" class="btn btn-primary btn-block">Open</a></p>
+                        </div>
+                    </div>
+            <?php endwhile; ?>
+
         </div>
 
         <hr>
@@ -142,8 +91,9 @@
 </div>
         </section>
         <!--End of Section Produk-->
+
         <!--Section Kategori-->
-         <section id="kategori">
+         <!--<section id="kategori">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -151,10 +101,10 @@
                 </div>
             </div>
             </div>
-        </section>
+        </section>-->
         <!--End of Section Kategori-->
            <!--Section Kategori-->
-         <section id="registrasi">
+         <!--<section id="registrasi">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -162,26 +112,8 @@
                 </div>
             </div>
             </div>
-        </section>
+        </section>-->
         <!--End of Section Kategori-->
         <!--End of Body-->
         <!--Footer-->
-        <footer id="footer" class="footer bg-primary" >
-        <div class="container padding-large text-center">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <p class="margin-bottom-medium"></p>
-                    <ul class="pager">
-                        <li class="facebook hvr-pulse"><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li class="twitter hvr-pulse"><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li class="g-plus hvr-pulse"><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                        <li class="youtube hvr-pulse"><a href="#"><i class="fa fa-youtube"></i></a></li>
-                        <li class="instagram hvr-pulse"><a href="#"><i class="fa fa-instagram"></i></a></li>
-                    </ul>
-                    <p class="copyright">
-                        &copy; Copyright BadjoeKoe
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
+        

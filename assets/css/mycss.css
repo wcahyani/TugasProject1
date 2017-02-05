@@ -17,3 +17,12 @@
 .btn-tambah{
     margin-bottom: 15px;
 }
+
+.foto-produk{
+    height : 300px !important;
+    width: 400px !important;
+}
+
+#footer{
+    margin-top: 50px;
+}

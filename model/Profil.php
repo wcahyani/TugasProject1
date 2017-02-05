@@ -17,25 +17,20 @@ Class Profil
         $this->conn = $db;
     }
 
-    //ambil profil berdasarkan id
-    public function getProfil($id)
-    {
-        $query = "";
-        $data = $this->conn->prepare($query);
-        $data->execute();
-        return $data;
-    }
 
-    //simpan update profil user baru
-    public function updateProfil(Array $data)
-    {
-        $query = "";
-        $data = $this->conn->prepare($query);
-        $data->execute();
-        return true;
-    }
-
-    //cek duplikat id profil
+     /*
+    |-------------------------------------------------
+    | cek duplikat profil
+    |--------------------------------------------------
+    |
+    | Parameter :
+    | $id = Mixed (id user)
+    |
+    | Return :
+    | jika berhasil = TRUE
+    | jika gagal = FALSE
+    |
+    */
     public function checkProfil($id){
         $query = "";
         $data = $this->conn->prepare($query);

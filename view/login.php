@@ -53,7 +53,7 @@
                 <form class="form-horizontal" role="form" id="formregister">
                 	<div class="modal-body">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label" for="firstname">Nama:</label>
+                            <label class="col-sm-2 control-label" for="firstname">Email:</label>
                             <div class="col-md-10">
                                 <input class="form-control" id="Email" name="email" type="email" placeholder="Email">
                                 <div class="error-box" id="EmailError"></div>

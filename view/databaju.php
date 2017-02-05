@@ -35,7 +35,7 @@
                         <i class="fa fa-plus-circle"></i> Tambah Produk
                     </button>
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <table class="table table-striped table-bordered table-hover" id="tabel-produk">
                             <thead>
                                 <tr>
                                     <th>No</th>

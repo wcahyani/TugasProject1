@@ -53,7 +53,7 @@ elseif($action == 'editprofil'){
         ];
 
         $where = ['id_profile' => $_SESSION['id']];
-        $stmt = $con->update('tabel_profile', $update, $where);
+        $stmt  = $con->update('tabel_profile', $update, $where);
         $stmt->execute();
 
         $return['hasil'] = 'sukses';
@@ -96,7 +96,57 @@ elseif($action == 'editfoto'){
     //ganti array ke json, dan echo sbg text html untuk dikembalikan ke ajax
     echo json_encode($return);
 }
+elseif($action == 'password'){
+    $data = [
+        'passLama'   => isset($_POST['passLama']) ? $_POST['passLama'] : null,
+        'passBaru'   => isset($_POST['passBaru']) ? $_POST['passBaru'] : null,
+        'passBaru2'  => isset($_POST['passBaru2']) ? $_POST['passBaru2'] : null
+    ];
+
+    foreach($data as $key => $value){
+        if(empty($value)){
+            $return['error'][$key] = $key.' tidak boleh kosong';
+        }
+    }
+
+    if(!empty($data['passLama'])){
+        $stmt = $con->select('member', ['id_profil' => $_SESSION['id']], 'password');
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_OBJ);
+
+        $pass = $row->password;
+
+        if(!password_verify($data['passLama'], $pass)){
+            $return['error']['passLama'] = 'Password Lama salah';
+        }
+    }
+
+    if(!empty($data['passBaru']) && !empty($data['passBaru2'])){
+        if($data['passBaru'] != $data['passBaru2']){
+            $return['error']['passBaru']  = 'Password dan konfirmasi password tidak sama';
+            $return['error']['passBaru2'] = 'Password dan konfirmasi password tidak sama';
+        }
+    }
+
+    if(!empty($return['error'])){
+        $return['hasil'] = 'gagal';
+    }
+    else{
+        $update = [
+            'password' => password_hash($data['passBaru'], PASSWORD_BCRYPT)
+        ];
+
+        $where = ['id_profil' => $_SESSION['id']];
+
+        $stmt = $con->update('member', $update, $where);
+        $stmt->execute();
+
+        $return['hasil'] = 'sukses';
+    }
+
+    echo json_encode($return);
+}
 else{
-    //error action kosong
+    header('location: view/404.html');
 }
 ?>

@@ -25,6 +25,9 @@
             <h1 class="page-header">&raquo; Profil</h1>
         </div>
     </div>
+
+    <div id="alert-box"></div>
+
     <div class="row">
         <div class="col-lg-12">
             <div class="col-md-5">
@@ -121,31 +124,35 @@
                     <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
                     <h4 class="modal-title" id="myModalLabel">Edit Password</h4>
                 </div>
-                <div class="modal-body">
-                    <form class="form-horizontal" role="form">
+                <form class="form-horizontal" role="form" method="POST" id="formPassword">
+                    <div class="modal-body">
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="passLama">Password Lama</label>
                             <div class="col-md-10">
-                                <input class="form-control" id="passLama" name="passLama" type="text">
+                                <input class="form-control" id="passLama" name="passLama" type="password">
+                                <div class="error-box" id="passLamaError"></div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="passBaru">Password Baru</label>
                             <div class="col-md-10">
-                                <input class="form-control" id="passBaru" name="passBaru" type="text">
+                                <input class="form-control" id="passBaru" name="passBaru" type="password">
+                                <div class="error-box" id="passBaruError"></div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="passBaru2">Konfirmasi Password Baru</label>
                             <div class="col-md-10">
-                                <input class="form-control" id="passBaru2" name="passBaru2" type="text">
+                                <input class="form-control" id="passBaru2" name="passBaru2" type="password">
+                                <div class="error-box" id="passBaru2Error"></div>
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-default" data-dismiss="modal" type="button">Close</button> <button class="btn btn-primary" data-dismiss="modal" id="modalsave" type="button">Submit</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                        <button class="btn btn-primary" id="modalsave">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

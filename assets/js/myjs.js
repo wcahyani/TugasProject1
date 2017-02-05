@@ -12,7 +12,9 @@ $(document).ready(function()
         }
     });*/
 
-    //$('#dataTables-example').DataTable();
+    $('#tabel-kategori').DataTable();
+    
+    $('#tabel-produk').DataTable();
 
     //--------------------------------------------- Misc ----------------------------------------------------//
 
@@ -128,6 +130,12 @@ $(document).ready(function()
                 });
 
                 $('#mymodaledit').modal('hide');
+                $('#alert-box').html(
+                    '<div class="alert alert-success">' +
+                        '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' +
+                        '<strong>Berhasil : </strong> Data profil berhasil diperbaharui' +
+                    '</div>'
+                );
             }
         });
     });
@@ -158,6 +166,36 @@ $(document).ready(function()
             }
         });
     });
+
+    //form ganti password
+    $('#formPassword').submit(function(e){
+        e.preventDefault();
+        refreshError($(this));
+
+        var url = 'action/profil.php?action=password';
+        var data = $(this).serialize();
+
+        $.post(url, data, function(result){
+            var data = JSON.parse(result);
+
+            if(data.hasil != 'sukses'){
+                $.each(data.error, function(key, value){
+                    $('#'+ key +'Error').text(value);
+                    $('#'+ key).parents('.form-group').addClass('has-error has-feedback');
+                    $('#'+ key).after('<span class="glyphicon glyphicon-remove form-control-feedback"></span>');
+                });
+            }
+            else{
+                $('#myModalpass').modal('hide');
+                $('#alert-box').html(
+                    '<div class="alert alert-success">' +
+                        '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' +
+                        '<strong>Berhasil : </strong> Password berhasil diperbaharui' +
+                    '</div>'
+                );
+            }
+        });
+    })
 
     //--------------------------------------------- Produk ----------------------------------------------------//
 

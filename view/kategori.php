@@ -39,7 +39,7 @@
                     <i class="fa fa-plus-circle"></i> Tambah Kategori
                 </button>
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover tabelcat" id="dataTables-example">
+                    <table class="table table-striped table-bordered table-hover tabelcat" id="tabel-kategori">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -129,4 +129,5 @@
             </form>
         </div>
     </div>
+</div>
 </div>
