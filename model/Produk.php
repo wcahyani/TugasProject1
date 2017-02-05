@@ -11,7 +11,8 @@ Class Produk
     //tampilkan semua produk
     public function getAllProduk()
     {
-        $query = "SELECT * FROM barang";
+        $query = "SELECT id_produk, nama_produk, foto_produk, ukuran, harga_produk, nama_kategori FROM tabel_product
+                  INNER JOIN kategori ON tabel_product.id_kategori = kategori.id_kategori";
         $data = $this->conn->prepare($query);
         $data->execute();
         return $data;
@@ -24,33 +25,6 @@ Class Produk
         $data = $this->conn->prepare($query);
         $data->execute();
         return $data;
-    }
-
-    //input data produk baru
-    public function insertProduk(Array $data)
-    {
-        $query = "";
-        $data = $this->conn->prepare($query);
-        $data->execute();
-        return true;
-    }
-
-    //simpan update produk
-    public function updateProduk(Array $data)
-    {
-        $query = "";
-        $data = $this->conn->prepare($query);
-        $data->execute();
-        return true;
-    }
-
-    //hapus produk
-    public function deleteProduk($id)
-    {
-        $query = "";
-        $data = $this->conn->prepare($query);
-        $data->execute();
-        return true;
     }
 
     //cek duplikat id produk

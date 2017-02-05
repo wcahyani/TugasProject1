@@ -8,8 +8,9 @@
     <!--bootstrap core item-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
         <link href="assets/css/sb-admin.css" rel="stylesheet">
-        <link href="assets/css/mycss.css" rel="stylesheet"> 
+        <link href="assets/css/mycss.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -67,7 +68,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-user">
                             <?php if($_SESSION['level'] == '1') : ?>
-                                <li><a href="?databaju"><i class="fa fa-database fa-fw"></i>Lihat Data Barang</a></li>
+                                <li><a href="?databaju"><i class="fa fa-database fa-fw"></i>Lihat Produk</a></li>
                                 <li class="divider"></li>
                             <?php endif; ?>
                             <li><a href="?profil"><i class="fa fa-user fa-fw"></i> My Profile</a>
