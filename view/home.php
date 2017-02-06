@@ -16,8 +16,7 @@
         <header class="header bg-primary">
            <div class="carousel-caption">
                         <h1 class="light mab-none text-left">Selamat Datang <strong class="bold-text">@BadjoeKoe</strong></h1>
-                        <h1 class="light margin-bottom-medium mat-none text-left">And We Are <strong class="bold-text">Awesome</strong></h1>
-                        <p class="light margin-bottom-medium text-left">Stop blending in & start leaving your mark on the web.</p>
+                        <h1 class="light margin-bottom-medium mat-none text-left">Wujudkan Gayamu <strong class="bold-text">@BadjoeKoe</strong></h1>
                         <div class="call-button">
                             <div class="row">
                                 <div class="col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-2 col-xs-12">
